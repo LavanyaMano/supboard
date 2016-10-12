@@ -1,8 +1,8 @@
 {
-  "name": "",
+  "name": "supboard",
   "version": "1.0.0",
-  "description": "",
-  "repository": "",
+  "description": "Short posts broadcast",
+  "repository": "https://github.com/LavanyaMano/supboard.git",
   "scripts": {
     "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1",
