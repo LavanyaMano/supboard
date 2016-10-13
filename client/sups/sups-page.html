@@ -7,12 +7,14 @@
                 <p class="lead">
                     View the latest sups from about the world or add yours to the mix below.
                 </p>
-                <sups-edit save="supsPageCtrl.saveSup()"/>
+                <sups-edit 
+                sup ="supsPageCtrl.editedSup"
+                save="supsPageCtrl.saveSup(editedSup)"/>
             </div>
         </div>
         <div class="col-md-8">
             <h2>Latest Sups</h2>
                 <sups-item ng-repeat= "sup in supsPageCtrl.sups" sup="sup"/>
-            </div>
+        </div>
         </div>
     </div>
