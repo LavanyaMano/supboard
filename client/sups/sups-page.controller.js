@@ -1,9 +1,15 @@
-function SupsPageController(){
+function SupsPageController(supsAPIService,$interval){
     const ctrl = this;
+    function getSups(){
+        supsAPIService.sups.get().$promise.then((data)=>{
+        ctrl.sups = data.results;
+    });
+    }
+    getSups();
+    $interval(getSups,5000);
 
-    ctrl.sup ={
-        text: 'Hey what up?',
-        created_date: Date.now(),
+    ctrl.saveSup = function saveSup(){
+        alert('save sup');
     };
 }
 
