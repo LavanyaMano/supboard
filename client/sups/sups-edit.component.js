@@ -6,6 +6,8 @@ const supsEditComponent = {
     bindings:{
         save: '&',
         sup:'<',
+        //? allows callback to be undefined, if ? not given it will create cancel button in  the adding form. 
+        cancel:'&?',
     },
     controller: SupsEditController,
     controllerAs:'supsEditCtrl',

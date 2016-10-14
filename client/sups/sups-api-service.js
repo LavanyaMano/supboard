@@ -1,8 +1,14 @@
 function supsAPIService($resource){
     const api={
-        sups:$resource('/api/sups/'),
-    }
+        sups:$resource('/api/sups/:id/',{id:'@id'},
+            {
+                update: {
+                    method:'PUT',
+                },
+            }),
+
+    };
     return api;
 }
 
-export default supsAPIService;
+export default supsAPIService; 

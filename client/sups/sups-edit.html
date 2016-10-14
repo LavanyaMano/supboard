@@ -6,4 +6,10 @@
         </label>
     </div>
     <button class="btn btn-primary" type="submit">Save Sup</button>
+    <button 
+    class="btn btn-danger" 
+    type="button" 
+    ng-show="supsEditCtrl.cancel"
+    ng-click="supsEditCtrl.cancel()"
+    >Cancel</button>
 </form>

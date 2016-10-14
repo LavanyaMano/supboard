@@ -1,0 +1,10 @@
+flashes{
+    display: block !important; 
+    position: fixed;
+    bottom:0;
+    z-index: 2000;
+}
+
+.sups-tem .panel-footer {
+    min-height: 60px;
+}

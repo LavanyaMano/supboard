@@ -14,7 +14,12 @@
         </div>
         <div class="col-md-8">
             <h2>Latest Sups</h2>
-                <sups-item ng-repeat= "sup in supsPageCtrl.sups" sup="sup"/>
+                <sups-item 
+                ng-repeat= "sup in supsPageCtrl.sups track by sup.id" 
+                sup="sup"
+                delete = supsPageCtrl.deleteSup(supToDelete)
+                update = supsPageCtrl.updateSup(supToUpdate)
+                />
         </div>
         </div>
     </div>

@@ -3,7 +3,7 @@ import 'angular-resource';
 import FlashesModule from '../flashes/flashes.module';
 import supsPageComponent from './sups-page.component';
 import supsItemComponent from './sups-item.component';
-import supsEditComponent from './sups-edit.component'
+import supsEditComponent from './sups-edit.component';
 import supsAPIService from './sups-api-service';
 
 

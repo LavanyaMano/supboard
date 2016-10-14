@@ -31885,11 +31885,11 @@
 	
 	var _supsPage2 = _interopRequireDefault(_supsPage);
 	
-	var _supsItem = __webpack_require__(15);
+	var _supsItem = __webpack_require__(16);
 	
 	var _supsItem2 = _interopRequireDefault(_supsItem);
 	
-	var _supsEdit = __webpack_require__(18);
+	var _supsEdit = __webpack_require__(19);
 	
 	var _supsEdit2 = _interopRequireDefault(_supsEdit);
 	
@@ -32925,17 +32925,19 @@
 /* 13 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"row\">\n        <div class=\"col-md-4\">\n            <div class=\"jumbotron\">\n                <h1>\n                    Sup\n                </h1>\n                <p class=\"lead\">\n                    View the latest sups from about the world or add yours to the mix below.\n                </p>\n                <sups-edit \n                sup =\"supsPageCtrl.editedSup\"\n                save=\"supsPageCtrl.saveSup(editedSup)\"/>\n            </div>\n        </div>\n        <div class=\"col-md-8\">\n            <h2>Latest Sups</h2>\n                <sups-item ng-repeat= \"sup in supsPageCtrl.sups\" sup=\"sup\"/>\n        </div>\n        </div>\n    </div>"
+	module.exports = "<div class=\"row\">\n        <div class=\"col-md-4\">\n            <div class=\"jumbotron\">\n                <h1>\n                    Sup\n                </h1>\n                <p class=\"lead\">\n                    View the latest sups from about the world or add yours to the mix below.\n                </p>\n                <sups-edit \n                sup =\"supsPageCtrl.editedSup\"\n                save=\"supsPageCtrl.saveSup(editedSup)\"/>\n            </div>\n        </div>\n        <div class=\"col-md-8\">\n            <h2>Latest Sups</h2>\n                <sups-item \n                ng-repeat= \"sup in supsPageCtrl.sups track by sup.id\" \n                sup=\"sup\"\n                delete = supsPageCtrl.deleteSup(supToDelete)\n                update = supsPageCtrl.updateSup(supToUpdate)\n                />\n        </div>\n        </div>\n    </div>"
 
 /***/ },
 /* 14 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _ramda = __webpack_require__(15);
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
@@ -32957,126 +32959,28 @@
 	            flashesService.displayMessage('Sup Created!', 'success');
 	        });
 	    };
+	    ctrl.updateSup = function updateSup(supToUpdate) {
+	        supsAPIService.sups.update(supToUpdate).$promise.then(function () {
+	            flashesService.displayMessage('sup updated', 'success');
+	        });
+	    };
+	    ctrl.deleteSup = function deleteSup(supToDelete) {
+	        var index = (0, _ramda.findIndex)(function (item) {
+	            return supToDelete.id === item.id;
+	        })(ctrl.sups);
+	        if (index !== -1) {
+	            ctrl.sups.splice(index, 1);
+	        }
+	        supsAPIService.sups.delete(supToDelete).$promise.then(function () {
+	            flashesService.displayMessage('Sup Delted', 'danger');
+	        });
+	    };
 	}
 	
 	exports.default = SupsPageController;
 
 /***/ },
 /* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _supsItem = __webpack_require__(16);
-	
-	var _supsItem2 = _interopRequireDefault(_supsItem);
-	
-	var _supsItem3 = __webpack_require__(17);
-	
-	var _supsItem4 = _interopRequireDefault(_supsItem3);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var supsItemComponent = {
-	    template: _supsItem2.default,
-	    bindings: {
-	        sup: '<'
-	    },
-	    controller: _supsItem4.default,
-	    controllerAs: 'supsItemCtrl'
-	};
-	
-	exports.default = supsItemComponent;
-
-/***/ },
-/* 16 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"panel panel-default\">\n    <div class=\"panel-body\">\n        {{supsItemCtrl.sup.text}}\n    </div>\n    <div class=\"panel-footer clearfix\">\n        <div class=\"pull-right\">\n            {{supsItemCtrl.sup.created_date | date:'medium'}}\n        </div>\n    </div>\n</div>"
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	function SupsItemController() {}
-	
-	exports.default = SupsItemController;
-
-/***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _supsEdit = __webpack_require__(19);
-	
-	var _supsEdit2 = _interopRequireDefault(_supsEdit);
-	
-	var _supsEdit3 = __webpack_require__(20);
-	
-	var _supsEdit4 = _interopRequireDefault(_supsEdit3);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var supsEditComponent = {
-	    template: _supsEdit2.default,
-	    bindings: {
-	        save: '&',
-	        sup: '<'
-	    },
-	    controller: _supsEdit4.default,
-	    controllerAs: 'supsEditCtrl'
-	
-	};
-	
-	exports.default = supsEditComponent;
-
-/***/ },
-/* 19 */
-/***/ function(module, exports) {
-
-	module.exports = "<form ng-submit=\"supsEditCtrl.saveSup()\">\n    <div class=\"form-group\">\n        <label>\n            Sups text\n            <textarea ng-model=\"supsEditCtrl.editedSup.text\" class=\"form-control\"></textarea>\n        </label>\n    </div>\n    <button class=\"btn btn-primary\" type=\"submit\">Save Sup</button>\n</form>"
-
-/***/ },
-/* 20 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _ramda = __webpack_require__(21);
-	
-	function SupsEditController() {
-	    var ctrl = this;
-	    ctrl.editedSup = {};
-	    ctrl.$onChanges = function $onChanges() {
-	        ctrl.editedSup = (0, _ramda.merge)({}, ctrl.sup);
-	    };
-	    ctrl.saveSup = function saveSup() {
-	        ctrl.save({ editedSup: ctrl.editedSup }); //component binding will define what to do in this function.
-	    };
-	}
-	
-	exports.default = SupsEditController;
-
-/***/ },
-/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//  Ramda v0.22.1
@@ -41913,6 +41817,148 @@
 
 
 /***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _supsItem = __webpack_require__(17);
+	
+	var _supsItem2 = _interopRequireDefault(_supsItem);
+	
+	var _supsItem3 = __webpack_require__(18);
+	
+	var _supsItem4 = _interopRequireDefault(_supsItem3);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var supsItemComponent = {
+	    template: _supsItem2.default,
+	    bindings: {
+	        sup: '<',
+	        delete: '&',
+	        update: '&'
+	    },
+	    controller: _supsItem4.default,
+	    controllerAs: 'supsItemCtrl'
+	};
+	
+	exports.default = supsItemComponent;
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	module.exports = "<div \n    class=\"panel panel-default sups-item\"\n    ng-mouseover=\"supsItemCtrl.setShowControls(true)\"\n    ng-mouseout= \"supsItemCtrl.setShowControls(false)\"\n>\n    <div class=\"panel-body\">\n        <p class=\"lead\" ng-show=\"!supsItemCtrl.editMode\">\n            {{supsItemCtrl.sup.text}}\n        </p>\n        <sups-edit \n            ng-show = \"supsItemCtrl.editMode\"\n            sup =\"supsItemCtrl. supToEdit\"\n            save=\"supsItemCtrl.editSup(editedSup)\"\n            cancel = \"supsItemCtrl.setEditMode(false)\"\n        />\n\n    </div>\n    <div class=\"panel-footer clearfix\">\n        <div class=\"pull-right\">\n            {{supsItemCtrl.sup.created_date | date:'medium'}}\n        </div>\n        <div class=\"sups-item-controls\" ng-show=\"supsItemCtrl.showControls\">\n            <button class=\"btn btn-primary\" ng-click=\"supsItemCtrl.setEditMode(true)\">\n                <i class=\"fa fa-pencil-square-o\"></i>\n            </button>\n            <button class=\"btn btn-danger\" ng-click=\"supsItemCtrl.deleteSup()\">\n                <i class=\"fa fa-trash-o\"></i>\n            </button>\n        </div>\n    </div>\n</div>"
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _ramda = __webpack_require__(15);
+	
+	function SupsItemController() {
+	    var ctrl = this;
+	    ctrl.showControls = false;
+	    ctrl.editMode = false;
+	    ctrl.supToEdit = {};
+	
+	    ctrl.setShowControls = function setShowControls(showControls) {
+	        ctrl.showControls = showControls;
+	    };
+	    ctrl.setEditMode = function setEditMode(editMode) {
+	        ctrl.editMode = editMode;
+	        ctrl.supToEdit = (0, _ramda.merge)({}, ctrl.sup);
+	    };
+	    ctrl.deleteSup = function deleteSup() {
+	        ctrl.delete({ supToDelete: ctrl.sup });
+	    };
+	    ctrl.editSup = function editSup(supToEdit) {
+	        ctrl.update({ supToUpdate: supToEdit });
+	        ctrl.sup = supToEdit;
+	        ctrl.editMode = false;
+	    };
+	}
+	
+	exports.default = SupsItemController;
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _supsEdit = __webpack_require__(20);
+	
+	var _supsEdit2 = _interopRequireDefault(_supsEdit);
+	
+	var _supsEdit3 = __webpack_require__(21);
+	
+	var _supsEdit4 = _interopRequireDefault(_supsEdit3);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var supsEditComponent = {
+	    template: _supsEdit2.default,
+	    bindings: {
+	        save: '&',
+	        sup: '<',
+	        //? allows callback to be undefined, if ? not given it will create cancel button in  the adding form. 
+	        cancel: '&?'
+	    },
+	    controller: _supsEdit4.default,
+	    controllerAs: 'supsEditCtrl'
+	
+	};
+	
+	exports.default = supsEditComponent;
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+	module.exports = "<form ng-submit=\"supsEditCtrl.saveSup()\">\n    <div class=\"form-group\">\n        <label>\n            Sups text\n            <textarea ng-model=\"supsEditCtrl.editedSup.text\" class=\"form-control\"></textarea>\n        </label>\n    </div>\n    <button class=\"btn btn-primary\" type=\"submit\">Save Sup</button>\n    <button \n    class=\"btn btn-danger\" \n    type=\"button\" \n    ng-show=\"supsEditCtrl.cancel\"\n    ng-click=\"supsEditCtrl.cancel()\"\n    >Cancel</button>\n</form>"
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _ramda = __webpack_require__(15);
+	
+	function SupsEditController() {
+	    var ctrl = this;
+	    ctrl.editedSup = {};
+	    ctrl.$onChanges = function $onChanges() {
+	        ctrl.editedSup = (0, _ramda.merge)({}, ctrl.sup);
+	    };
+	    ctrl.saveSup = function saveSup() {
+	        ctrl.save({ editedSup: ctrl.editedSup }); //component binding will define what to do in this function.
+	    };
+	}
+	
+	exports.default = SupsEditController;
+
+/***/ },
 /* 22 */
 /***/ function(module, exports) {
 
@@ -41923,7 +41969,12 @@
 	});
 	function supsAPIService($resource) {
 	    var api = {
-	        sups: $resource('/api/sups/')
+	        sups: $resource('/api/sups/:id/', { id: '@id' }, {
+	            update: {
+	                method: 'PUT'
+	            }
+	        })
+	
 	    };
 	    return api;
 	}
@@ -41962,7 +42013,7 @@
 /* 24 */
 /***/ function(module, exports) {
 
-	module.exports = "<header>\n    <nav class=\"navbar navbar-inverse navbar-static-top\">\n        <div class=\"container-fluid\">\n            <div class=\"navbar-header\">\n                <span class=\"navbar-brand\">\n                    <i class=\"fa fa-thumbs-o-up\"></i> Supboard\n                </span>\n            </div>\n        </div>\n    </nav>\n</header>\n<div class=\"container-fluid\">\n    <div class=\"row\">\n        <div class=\"col-md-4 col-md-offset-4\">\n            <flashes/>\n        </div>\n    </div>\n    <sups-page/>\n</div>"
+	module.exports = "<header>\n    <nav class=\"navbar navbar-inverse navbar-static-top\">\n        <div class=\"container-fluid\">\n            <div class=\"navbar-header\">\n                <span class=\"navbar-brand\">\n                    <i class=\"fa fa-thumbs-o-up\"></i> Supboard\n                </span>\n            </div>\n        </div>\n    </nav>\n</header>\n<div class=\"container-fluid\">\n    <flashes/>\n    <sups-page/>\n</div>"
 
 /***/ },
 /* 25 */
